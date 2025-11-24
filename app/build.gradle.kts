@@ -1,4 +1,5 @@
 plugins {
+    id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
     id("androidx.room")
     alias(libs.plugins.android.application)
@@ -45,6 +46,16 @@ android {
 }
 
 dependencies {
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    ksp(libs.hilt.compiler)
     val nav_version = "2.8.2"
     implementation("androidx.navigation:navigation-compose:$nav_version")
     val compose_material_version = "1.7.3"

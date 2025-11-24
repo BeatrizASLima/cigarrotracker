@@ -27,6 +27,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cigarrotracker.ui.theme.CigarrotrackerTheme
 
+// HILT imports
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +82,6 @@ fun AppNavigation(navController: NavHostController, viewModel: CigarroViewModel)
 @Composable
 fun BottomNavigationBar(navController: NavController, appItems: List<Destino>) {
     BottomNavigation(
-        // em vez de R.color.purple_700 uso a cor do tema
         backgroundColor = MaterialTheme.colorScheme.primary,
         contentColor = Color.White
     ) {
@@ -104,8 +107,6 @@ fun BottomNavigationBar(navController: NavController, appItems: List<Destino>) {
                     )
                 },
                 selected = currentRoute == item.route,
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color.White.copy(alpha = 0.4f),
                 alwaysShowLabel = true,
                 onClick = {
                     navController.navigate(item.route) {
