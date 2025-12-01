@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.androidx.paging.common)
+    implementation(libs.androidx.compose.ui.text)
     ksp(libs.hilt.compiler)
     val nav_version = "2.8.2"
     implementation("androidx.navigation:navigation-compose:$nav_version")

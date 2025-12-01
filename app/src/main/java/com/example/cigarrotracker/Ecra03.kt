@@ -2,11 +2,15 @@ package com.example.cigarrotracker
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -19,39 +23,90 @@ fun Ecra03(viewModel: CigarroViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("DINHEIRO GASTO", fontSize = 22.sp)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = precoTexto.value,
-            onValueChange = { novo ->
-                precoTexto.value = novo
-                viewModel.precoMaco = novo.toDoubleOrNull() ?: 0.0
-            },
-            label = { Text("Preço do maço (€)") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
+        Text(
+            text = "Dinheiro gasto",
+            style = MaterialTheme.typography.headlineMedium.copy(
+                color = MaterialTheme.colorScheme.primary
+            )
         )
+
+        Text(
+            text = "Vê quanto estás a investir nos cigarros e ajusta os valores conforme o teu maço.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+        )
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(4.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedTextField(
+                    value = precoTexto.value,
+                    onValueChange = { novo ->
+                        precoTexto.value = novo
+                        viewModel.precoMaco = novo.toDoubleOrNull() ?: 0.0
+                    },
+                    label = { Text("Preço do maço (€)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                OutlinedTextField(
+                    value = cigarrosTexto.value,
+                    onValueChange = { novo ->
+                        cigarrosTexto.value = novo
+                        viewModel.cigarrosPorMaco = novo.toIntOrNull() ?: 0
+                    },
+                    label = { Text("Cigarros por maço") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        OutlinedTextField(
-            value = cigarrosTexto.value,
-            onValueChange = { novo ->
-                cigarrosTexto.value = novo
-                viewModel.cigarrosPorMaco = novo.toIntOrNull() ?: 0
-            },
-            label = { Text("Cigarros por maço") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(4.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "Total de cigarros: ${viewModel.cigarrosTotal}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = String.format("Dinheiro gasto: € %.2f", viewModel.dinheiroGasto),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+
+        Text(
+            text = "Cada cigarro que não fumas é dinheiro que fica contigo (e saúde também).",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text("Total de cigarros: ${viewModel.cigarrosTotal}")
-        Text(String.format("Dinheiro gasto: € %.2f", viewModel.dinheiroGasto))
     }
 }

@@ -1,6 +1,9 @@
 package com.example.cigarrotracker
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -10,19 +13,19 @@ import kotlinx.coroutines.launch
 
 class CigarroViewModel(application: Application) : ViewModel() {
 
-    // --- ESTADO DO APP (igual ao que você já tinha) ---
+    // --- ESTADO OBSERVÁVEL PELO COMPOSE ---
 
-    var cigarrosHoje: Int = 0
+    var cigarrosHoje by mutableStateOf(0)
         private set
 
-    var cigarrosTotal: Int = 0
+    var cigarrosTotal by mutableStateOf(0)
         private set
 
-    var diasDeUso: Int = 1
+    var diasDeUso by mutableStateOf(1)
         private set
 
-    var precoMaco: Double = 6.0
-    var cigarrosPorMaco: Int = 20
+    var precoMaco by mutableStateOf(6.0)
+    var cigarrosPorMaco by mutableStateOf(20)
 
     // --- REPOSITÓRIO / BD ---
 
@@ -39,7 +42,6 @@ class CigarroViewModel(application: Application) : ViewModel() {
                 cigarrosTotal = est.cigarrosTotal
                 diasDeUso = est.diasDeUso
             } else {
-                // primeira vez: grava valores iniciais
                 salvarEstatisticasNaBd()
             }
         }
