@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Article
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Destino(val route: String, val icon: ImageVector, val title: String) {
@@ -22,8 +23,13 @@ sealed class Destino(val route: String, val icon: ImageVector, val title: String
         icon = Icons.Default.AttachMoney,
         title = "Dinheiro"
     )
+    object EcraNoticias : Destino(
+        route = "ecraNoticias",
+        icon = Icons.Default.Article,
+        title = "Notícias"
+    )
 
     companion object {
-        val toList = listOf(Ecra01, Ecra02, Ecra03)
+        val toList = listOf(Ecra01, Ecra02, Ecra03, EcraNoticias)
     }
 }
