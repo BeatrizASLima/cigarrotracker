@@ -27,6 +27,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cigarrotracker.ui.theme.CigarrotrackerTheme
 import com.example.cigarrotracker.components.NoticiasComposable
+import android.app.Application
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 // HILT imports
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,7 +55,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ProgramaPrincipal() {
     val navController = rememberNavController()
-    val viewModel: CigarroViewModel = viewModel()
+
+    val context = LocalContext.current.applicationContext as Application
+    val viewModel: CigarroViewModel = viewModel(
+        factory = CigarroViewModelFactory(context)
+    )
 
     Scaffold(
         bottomBar = {
@@ -67,6 +74,7 @@ fun ProgramaPrincipal() {
         }
     }
 }
+
 
 @Composable
 fun AppNavigation(navController: NavHostController, viewModel: CigarroViewModel) {
