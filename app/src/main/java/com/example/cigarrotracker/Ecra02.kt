@@ -1,6 +1,12 @@
 package com.example.cigarrotracker
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,22 +29,26 @@ fun Ecra02(viewModel: CigarroViewModel) {
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "Estatísticas",
-            style = MaterialTheme.typography.headlineMedium.copy(
-                color = MaterialTheme.colorScheme.primary
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Text(
+                text = "Estat?sticas",
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    color = MaterialTheme.colorScheme.primary
+                )
             )
-        )
 
-        Text(
-            text = "Vê a tua evolução ao longo dos dias.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
-        )
+            Text(
+                text = "V? a tua evolu??o ao longo dos dias.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+            )
+        }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
-        // Cards de estatísticas
         StatCard(
             titulo = "Total fumado",
             valor = "${viewModel.cigarrosTotal} cigarros"
@@ -50,7 +60,7 @@ fun Ecra02(viewModel: CigarroViewModel) {
         )
 
         StatCard(
-            titulo = "Média por dia",
+            titulo = "M?dia por dia",
             valor = "$mediaArredondada cigarros/dia"
         )
     }
@@ -62,9 +72,9 @@ private fun StatCard(
     valor: String
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(4.dp),
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
