@@ -96,8 +96,8 @@ fun Ecra01(viewModel: CigarroViewModel) {
             painter = painterResource(id = R.drawable.cigarro),
             contentDescription = "Cigarro",
             modifier = Modifier
-                .height(140.dp)
-                .padding(top = 4.dp)
+                .height(300.dp)
+                .padding(top = 18.dp)
         )
 
         HorizontalDivider(
