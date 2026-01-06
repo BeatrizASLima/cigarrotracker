@@ -36,14 +36,6 @@ fun Ecra01(viewModel: CigarroViewModel) {
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.cigarro),
-            contentDescription = "Cigarro",
-            modifier = Modifier
-                .height(72.dp)
-                .padding(bottom = 4.dp)
-        )
-
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(6.dp),
@@ -99,6 +91,14 @@ fun Ecra01(viewModel: CigarroViewModel) {
                 )
             }
         }
+
+        Image(
+            painter = painterResource(id = R.drawable.cigarro),
+            contentDescription = "Cigarro",
+            modifier = Modifier
+                .height(140.dp)
+                .padding(top = 4.dp)
+        )
 
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),
@@ -164,14 +164,5 @@ fun Ecra01(viewModel: CigarroViewModel) {
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "Tenta fumar um pouco menos do que ontem. Pequenos passos contam.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
     }
 }
