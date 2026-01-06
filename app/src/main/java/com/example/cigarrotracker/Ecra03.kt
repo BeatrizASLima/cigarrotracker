@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun Ecra03(viewModel: CigarroViewModel) {
@@ -23,24 +22,26 @@ fun Ecra03(viewModel: CigarroViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         Text(
             text = "Dinheiro gasto",
             style = MaterialTheme.typography.headlineMedium.copy(
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
             )
         )
 
         Text(
             text = "Vê quanto estás a investir nos cigarros e ajusta os valores conforme o teu maço.",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.75f)
         )
 
         Card(
             modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(4.dp),
+            shape = MaterialTheme.shapes.large,
+            elevation = CardDefaults.cardElevation(2.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
             )
@@ -48,8 +49,8 @@ fun Ecra03(viewModel: CigarroViewModel) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(18.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 OutlinedTextField(
                     value = precoTexto.value,
@@ -79,7 +80,8 @@ fun Ecra03(viewModel: CigarroViewModel) {
 
         Card(
             modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(4.dp),
+            shape = MaterialTheme.shapes.large,
+            elevation = CardDefaults.cardElevation(2.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer
             )
@@ -87,17 +89,17 @@ fun Ecra03(viewModel: CigarroViewModel) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                    .padding(18.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Text(
                     text = "Total de cigarros: ${viewModel.cigarrosTotal}",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                 )
                 Text(
                     text = String.format("Dinheiro gasto: € %.2f", viewModel.dinheiroGasto),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.primary
                 )
             }
