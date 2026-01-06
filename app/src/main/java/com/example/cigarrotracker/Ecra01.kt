@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun Ecra01(viewModel: CigarroViewModel) {
@@ -38,7 +37,8 @@ fun Ecra01(viewModel: CigarroViewModel) {
         ) {
             Text(
                 text = "Hoje",
-                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
+                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+                color = MaterialTheme.colorScheme.primary
             )
             Text(
                 text = "Acompanha quantos cigarros fumaste hoje.",
@@ -50,7 +50,7 @@ fun Ecra01(viewModel: CigarroViewModel) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.large,
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer
             )
@@ -69,8 +69,7 @@ fun Ecra01(viewModel: CigarroViewModel) {
                 )
                 Text(
                     text = viewModel.cigarrosHoje.toString(),
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.primary
                 )
                 Text(
@@ -82,7 +81,7 @@ fun Ecra01(viewModel: CigarroViewModel) {
         }
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedButton(
@@ -91,7 +90,10 @@ fun Ecra01(viewModel: CigarroViewModel) {
                     .weight(1f)
                     .height(48.dp)
             ) {
-                Text(text = "- 1")
+                Text(
+                    text = "- 1",
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
             Button(
                 onClick = { viewModel.adicionarCigarro() },
@@ -99,7 +101,10 @@ fun Ecra01(viewModel: CigarroViewModel) {
                     .weight(1f)
                     .height(48.dp)
             ) {
-                Text(text = "+ 1")
+                Text(
+                    text = "+ 1",
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
         }
 
@@ -109,7 +114,10 @@ fun Ecra01(viewModel: CigarroViewModel) {
                 .fillMaxWidth()
                 .height(48.dp)
         ) {
-            Text("Fechar o dia")
+            Text(
+                text = "Fechar o dia",
+                style = MaterialTheme.typography.labelLarge
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
