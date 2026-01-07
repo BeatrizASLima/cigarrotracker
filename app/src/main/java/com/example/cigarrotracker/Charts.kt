@@ -30,6 +30,7 @@ fun SimpleLineChart(
     modifier: Modifier = Modifier,
     lineColor: Color = MaterialTheme.colorScheme.primary,
     gridColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+    labelColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.75f),
     labelFormatter: (Float) -> String = { value -> value.toInt().toString() }
 ) {
     val safeValues = if (values.isEmpty()) listOf(0f) else values
@@ -55,7 +56,7 @@ fun SimpleLineChart(
         }
 
         val textPaint = Paint().apply {
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.75f).toArgb()
+            color = labelColor.toArgb()
             textSize = 12.sp.toPx()
             isAntiAlias = true
         }
@@ -114,6 +115,7 @@ fun SimpleBarChart(
     modifier: Modifier = Modifier,
     barColor: Color = MaterialTheme.colorScheme.tertiary,
     gridColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+    labelColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.75f),
     labelFormatter: (Float) -> String = { value -> value.toInt().toString() }
 ) {
     val safeValues = if (values.isEmpty()) listOf(0f) else values
@@ -139,7 +141,7 @@ fun SimpleBarChart(
         }
 
         val textPaint = Paint().apply {
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.75f).toArgb()
+            color = labelColor.toArgb()
             textSize = 12.sp.toPx()
             isAntiAlias = true
         }
