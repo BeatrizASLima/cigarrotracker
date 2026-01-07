@@ -57,7 +57,9 @@ fun Ecra03(viewModel: CigarroViewModel) {
         Text(
             text = "Vê quanto estás a investir nos cigarros e ajusta os valores conforme o teu maço.",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.75f)
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.75f),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
         )
 
         Card(

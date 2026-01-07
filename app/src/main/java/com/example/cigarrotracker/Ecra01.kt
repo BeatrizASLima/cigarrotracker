@@ -51,7 +51,9 @@ fun Ecra01(viewModel: CigarroViewModel) {
             Text(
                 text = "Acompanha quantos cigarros fumaste hoje.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.72f)
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.72f),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
         }
 

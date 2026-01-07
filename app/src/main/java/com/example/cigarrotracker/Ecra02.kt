@@ -56,7 +56,9 @@ fun Ecra02(viewModel: CigarroViewModel) {
             Text(
                 text = "Vê a tua evolução ao longo dos dias.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.75f)
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.75f),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
         }
 
