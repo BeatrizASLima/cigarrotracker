@@ -23,6 +23,12 @@ import kotlin.math.round
 fun Ecra02(viewModel: CigarroViewModel) {
     val media = viewModel.mediaPorDia
     val mediaArredondada = (round(media * 10) / 10.0)
+    val dias = viewModel.diasDeUso.coerceAtLeast(1)
+    val maxPontos = 14
+    val mediaFloat = if (viewModel.diasDeUso == 0) 0f else viewModel.cigarrosTotal.toFloat() / viewModel.diasDeUso
+    val pontos = minOf(dias, maxPontos)
+    val inicio = dias - pontos + 1
+    val valoresGrafico = (inicio..dias).map { dia -> mediaFloat * dia }
 
     Column(
         modifier = Modifier
@@ -50,6 +56,39 @@ fun Ecra02(viewModel: CigarroViewModel) {
         }
 
         Spacer(modifier = Modifier.height(6.dp))
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.large,
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(18.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Text(
+                    text = "Evolucao (projecao)",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                SimpleLineChart(
+                    values = valoresGrafico,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp)
+                )
+                Text(
+                    text = "Projecao linear com base na media diaria (sem historico real).",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
+                )
+            }
+        }
 
         StatCard(
             titulo = "Total fumado",

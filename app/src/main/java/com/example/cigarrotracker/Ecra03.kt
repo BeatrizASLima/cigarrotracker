@@ -17,6 +17,14 @@ import androidx.compose.ui.unit.dp
 fun Ecra03(viewModel: CigarroViewModel) {
     val precoTexto = remember { mutableStateOf(viewModel.precoMaco.toString()) }
     val cigarrosTexto = remember { mutableStateOf(viewModel.cigarrosPorMaco.toString()) }
+    val gastoPorDia = if (viewModel.cigarrosPorMaco == 0) {
+        0f
+    } else {
+        (viewModel.mediaPorDia.toFloat() / viewModel.cigarrosPorMaco) * viewModel.precoMaco.toFloat()
+    }
+    val gastoSemanal = gastoPorDia * 7f
+    val valoresSemanas = (1..4).map { semana -> gastoSemanal * semana }
+    val etiquetasSemanas = listOf("S1", "S2", "S3", "S4")
 
     Column(
         modifier = Modifier
@@ -72,6 +80,42 @@ fun Ecra03(viewModel: CigarroViewModel) {
                     label = { Text("Cigarros por maço") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.large,
+            elevation = CardDefaults.cardElevation(2.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(18.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Text(
+                    text = "Gasto acumulado (projecao)",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                SimpleBarChart(
+                    values = valoresSemanas,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp)
+                )
+                ChartLabelsRow(
+                    labels = etiquetasSemanas
+                )
+                Text(
+                    text = "Valores acumulados por semana com base na media atual.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
                 )
             }
         }
