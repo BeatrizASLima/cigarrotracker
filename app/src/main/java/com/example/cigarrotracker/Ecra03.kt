@@ -18,23 +18,21 @@ fun Ecra03(viewModel: CigarroViewModel) {
     val precoTexto = remember { mutableStateOf(viewModel.precoMaco.toString()) }
     val cigarrosTexto = remember { mutableStateOf(viewModel.cigarrosPorMaco.toString()) }
     val historico = viewModel.historicoDiario
-    val historicoRecente = if (historico.size > 7) historico.takeLast(7) else historico
-    val valoresGasto = if (historicoRecente.isEmpty()) {
-        listOf(0f)
-    } else {
-        historicoRecente.map { entrada ->
-            if (viewModel.cigarrosPorMaco == 0) {
-                0f
-            } else {
-                (entrada.cigarros.toFloat() / viewModel.cigarrosPorMaco) * viewModel.precoMaco.toFloat()
-            }
+    val gastoPorDia = historico.map { entrada ->
+        val gasto = if (viewModel.cigarrosPorMaco == 0) {
+            0f
+        } else {
+            (entrada.cigarros.toFloat() / viewModel.cigarrosPorMaco) * viewModel.precoMaco.toFloat()
         }
+        entrada.diaIndex to gasto
     }
-    val etiquetasDias = if (historicoRecente.isEmpty()) {
-        listOf("D${viewModel.diasDeUso}")
-    } else {
-        historicoRecente.map { entrada -> "D${entrada.diaIndex}" }
-    }
+    val gastoPorMes = gastoPorDia
+        .groupBy { (diaIndex, _) -> ((diaIndex - 1) / 30) + 1 }
+        .mapValues { (_, itens) -> itens.sumOf { it.second.toDouble() }.toFloat() }
+        .toSortedMap()
+    val meses = gastoPorMes.keys.toList()
+    val valoresGasto = if (meses.isEmpty()) listOf(0f) else meses.map { mes -> gastoPorMes[mes] ?: 0f }
+    val etiquetasMeses = if (meses.isEmpty()) listOf("M1") else meses.map { mes -> "M$mes" }
 
     Column(
         modifier = Modifier
@@ -109,7 +107,7 @@ fun Ecra03(viewModel: CigarroViewModel) {
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = "Gasto por dia (historico)",
+                    text = "Gasto por mes (historico)",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -121,10 +119,10 @@ fun Ecra03(viewModel: CigarroViewModel) {
                         .height(160.dp)
                 )
                 ChartLabelsRow(
-                    labels = etiquetasDias
+                    labels = etiquetasMeses
                 )
                 Text(
-                    text = "Valores reais por dia com base no historico gravado.",
+                    text = "Valores reais por mes com base no historico gravado.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
                 )
