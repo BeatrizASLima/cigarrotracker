@@ -30,9 +30,12 @@ fun Ecra03(viewModel: CigarroViewModel) {
         .groupBy { (diaIndex, _) -> ((diaIndex - 1) / 30) + 1 }
         .mapValues { (_, itens) -> itens.sumOf { it.second.toDouble() }.toFloat() }
         .toSortedMap()
-    val meses = gastoPorMes.keys.toList()
-    val valoresGasto = if (meses.isEmpty()) listOf(0f) else meses.map { mes -> gastoPorMes[mes] ?: 0f }
-    val etiquetasMeses = if (meses.isEmpty()) listOf("M1") else meses.map { mes -> "M$mes" }
+    val mesAtual = ((viewModel.diasDeUso - 1) / 30) + 1
+    val totalMesesMostrar = 6
+    val primeiroMes = (mesAtual - totalMesesMostrar + 1).coerceAtLeast(1)
+    val meses = (primeiroMes..mesAtual).toList()
+    val valoresGasto = meses.map { mes -> gastoPorMes[mes] ?: 0f }
+    val etiquetasMeses = meses.map { mes -> "M$mes" }
 
     Column(
         modifier = Modifier
