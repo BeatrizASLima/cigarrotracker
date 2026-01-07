@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlin.math.round
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun Ecra02(viewModel: CigarroViewModel) {
@@ -47,7 +48,9 @@ fun Ecra02(viewModel: CigarroViewModel) {
                 style = MaterialTheme.typography.headlineMedium.copy(
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.SemiBold
-                )
+                ),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
 
             Text(
