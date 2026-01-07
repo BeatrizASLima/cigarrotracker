@@ -17,14 +17,24 @@ import androidx.compose.ui.unit.dp
 fun Ecra03(viewModel: CigarroViewModel) {
     val precoTexto = remember { mutableStateOf(viewModel.precoMaco.toString()) }
     val cigarrosTexto = remember { mutableStateOf(viewModel.cigarrosPorMaco.toString()) }
-    val gastoPorDia = if (viewModel.cigarrosPorMaco == 0) {
-        0f
+    val historico = viewModel.historicoDiario
+    val historicoRecente = if (historico.size > 7) historico.takeLast(7) else historico
+    val valoresGasto = if (historicoRecente.isEmpty()) {
+        listOf(0f)
     } else {
-        (viewModel.mediaPorDia.toFloat() / viewModel.cigarrosPorMaco) * viewModel.precoMaco.toFloat()
+        historicoRecente.map { entrada ->
+            if (viewModel.cigarrosPorMaco == 0) {
+                0f
+            } else {
+                (entrada.cigarros.toFloat() / viewModel.cigarrosPorMaco) * viewModel.precoMaco.toFloat()
+            }
+        }
     }
-    val gastoSemanal = gastoPorDia * 7f
-    val valoresSemanas = (1..4).map { semana -> gastoSemanal * semana }
-    val etiquetasSemanas = listOf("S1", "S2", "S3", "S4")
+    val etiquetasDias = if (historicoRecente.isEmpty()) {
+        listOf("D${viewModel.diasDeUso}")
+    } else {
+        historicoRecente.map { entrada -> "D${entrada.diaIndex}" }
+    }
 
     Column(
         modifier = Modifier
@@ -99,21 +109,22 @@ fun Ecra03(viewModel: CigarroViewModel) {
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = "Gasto acumulado (projecao)",
+                    text = "Gasto por dia (historico)",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 SimpleBarChart(
-                    values = valoresSemanas,
+                    values = valoresGasto,
+                    labelFormatter = { value -> String.format("%.2f", value) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(160.dp)
                 )
                 ChartLabelsRow(
-                    labels = etiquetasSemanas
+                    labels = etiquetasDias
                 )
                 Text(
-                    text = "Valores acumulados por semana com base na media atual.",
+                    text = "Valores reais por dia com base no historico gravado.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
                 )

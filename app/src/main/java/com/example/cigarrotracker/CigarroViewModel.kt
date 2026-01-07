@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.cigarrotracker.data.CigarroDatabase
 import com.example.cigarrotracker.data.CigarroRepository
+import com.example.cigarrotracker.data.HistoricoEntity
 import kotlinx.coroutines.launch
 
 class CigarroViewModel(application: Application) : ViewModel() {
@@ -27,9 +28,13 @@ class CigarroViewModel(application: Application) : ViewModel() {
     var precoMaco by mutableStateOf(6.0)
     var cigarrosPorMaco by mutableStateOf(20)
 
+    var historicoDiario by mutableStateOf<List<HistoricoEntity>>(emptyList())
+        private set
+
     // --- REPOSITÓRIO / BD ---
 
     private val repository: CigarroRepository
+    private val maxHistoricoDias = 14
 
     init {
         val db = CigarroDatabase.getInstance(application)
@@ -44,6 +49,7 @@ class CigarroViewModel(application: Application) : ViewModel() {
             } else {
                 salvarEstatisticasNaBd()
             }
+            carregarHistorico()
         }
     }
 
@@ -59,6 +65,7 @@ class CigarroViewModel(application: Application) : ViewModel() {
         cigarrosHoje++
         cigarrosTotal++
         salvarEstatisticasNaBd()
+        atualizarHistoricoHoje()
     }
 
     fun removerCigarro() {
@@ -67,6 +74,7 @@ class CigarroViewModel(application: Application) : ViewModel() {
             cigarrosTotal--
             if (cigarrosTotal < 0) cigarrosTotal = 0
             salvarEstatisticasNaBd()
+            atualizarHistoricoHoje()
         }
     }
 
@@ -74,6 +82,7 @@ class CigarroViewModel(application: Application) : ViewModel() {
         diasDeUso++
         cigarrosHoje = 0
         salvarEstatisticasNaBd()
+        atualizarHistoricoHoje()
     }
 
     val mediaPorDia: Double
@@ -82,6 +91,25 @@ class CigarroViewModel(application: Application) : ViewModel() {
     val dinheiroGasto: Double
         get() = if (cigarrosPorMaco == 0) 0.0
         else (cigarrosTotal.toDouble() / cigarrosPorMaco) * precoMaco
+
+    private fun carregarHistorico() {
+        viewModelScope.launch {
+            val hoje = diasDeUso
+            val historico = repository.carregarHistorico(maxHistoricoDias)
+            historicoDiario = historico.sortedBy { it.diaIndex }
+            val hojeEntrada = historico.firstOrNull { it.diaIndex == hoje }
+            cigarrosHoje = hojeEntrada?.cigarros ?: 0
+        }
+    }
+
+    private fun atualizarHistoricoHoje() {
+        viewModelScope.launch {
+            val hoje = diasDeUso
+            repository.salvarHistorico(hoje, cigarrosHoje)
+            val historico = repository.carregarHistorico(maxHistoricoDias)
+            historicoDiario = historico.sortedBy { it.diaIndex }
+        }
+    }
 }
 
 // Factory para poder passar Application ao ViewModel
