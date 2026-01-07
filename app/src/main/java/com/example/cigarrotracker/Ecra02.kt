@@ -24,7 +24,13 @@ fun Ecra02(viewModel: CigarroViewModel) {
     val media = viewModel.mediaPorDia
     val mediaArredondada = (round(media * 10) / 10.0)
     val historico = viewModel.historicoDiario
-    val valoresGrafico = if (historico.isEmpty()) listOf(0f) else historico.map { it.cigarros.toFloat() }
+    val valoresBrutos = historico.map { it.cigarros.toFloat() }
+    val valoresGrafico = if (valoresBrutos.isEmpty()) {
+        listOf(0f)
+    } else {
+        val semZeroFinal = valoresBrutos.dropLastWhile { it == 0f }
+        if (semZeroFinal.isEmpty()) listOf(0f) else semZeroFinal
+    }
 
     Column(
         modifier = Modifier
