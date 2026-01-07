@@ -79,10 +79,17 @@ class CigarroViewModel(application: Application) : ViewModel() {
     }
 
     fun fecharDia() {
+        val diaAnterior = diasDeUso
+        val cigarrosDia = cigarrosHoje
         diasDeUso++
         cigarrosHoje = 0
         salvarEstatisticasNaBd()
-        atualizarHistoricoHoje()
+        viewModelScope.launch {
+            repository.salvarHistorico(diaAnterior, cigarrosDia)
+            repository.salvarHistorico(diasDeUso, cigarrosHoje)
+            val historico = repository.carregarHistorico(maxHistoricoDias)
+            historicoDiario = historico.sortedBy { it.diaIndex }
+        }
     }
 
     val mediaPorDia: Double
@@ -95,7 +102,11 @@ class CigarroViewModel(application: Application) : ViewModel() {
     private fun carregarHistorico() {
         viewModelScope.launch {
             val hoje = diasDeUso
-            val historico = repository.carregarHistorico(maxHistoricoDias)
+            var historico = repository.carregarHistorico(maxHistoricoDias)
+            if (historico.none { it.diaIndex == hoje }) {
+                repository.salvarHistorico(hoje, cigarrosHoje)
+                historico = repository.carregarHistorico(maxHistoricoDias)
+            }
             historicoDiario = historico.sortedBy { it.diaIndex }
             val hojeEntrada = historico.firstOrNull { it.diaIndex == hoje }
             cigarrosHoje = hojeEntrada?.cigarros ?: 0
