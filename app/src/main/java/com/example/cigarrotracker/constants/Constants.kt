@@ -2,6 +2,7 @@ package com.example.cigarrotracker.constants
 
 class Constants {
     companion object {
-        const val BASE_URL = "https://newsapi.org/v2/"
+        const val OVERPASS_BASE_URL = "https://overpass-api.de/"
+        const val NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/"
     }
 }

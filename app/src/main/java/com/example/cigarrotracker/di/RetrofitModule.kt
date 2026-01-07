@@ -1,7 +1,9 @@
 package com.example.cigarrotracker.di
 
-import com.example.cigarrotracker.constants.Constants.Companion.BASE_URL
-import com.example.cigarrotracker.data.service.NewsApiService
+import com.example.cigarrotracker.constants.Constants.Companion.NOMINATIM_BASE_URL
+import com.example.cigarrotracker.constants.Constants.Companion.OVERPASS_BASE_URL
+import com.example.cigarrotracker.data.service.NominatimApiService
+import com.example.cigarrotracker.data.service.OverpassApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,10 +18,19 @@ class RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideRetrofitService(): NewsApiService =
+    fun provideOverpassService(): OverpassApiService =
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(OVERPASS_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(NewsApiService::class.java)
+            .create(OverpassApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideNominatimService(): NominatimApiService =
+        Retrofit.Builder()
+            .baseUrl(NOMINATIM_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NominatimApiService::class.java)
 }

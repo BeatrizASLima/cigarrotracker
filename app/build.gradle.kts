@@ -51,11 +51,6 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.paging.runtime)
-    implementation(libs.androidx.paging.compose)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
-    implementation(libs.androidx.paging.common)
     implementation(libs.androidx.compose.ui.text)
     ksp(libs.hilt.compiler)
     val nav_version = "2.8.2"

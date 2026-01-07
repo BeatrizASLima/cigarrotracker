@@ -1,7 +1,8 @@
 package com.example.cigarrotracker.di
 
-import com.example.cigarrotracker.data.repository.NoticiaRepository
-import com.example.cigarrotracker.data.service.NewsApiService
+import com.example.cigarrotracker.data.repository.PlacesRepository
+import com.example.cigarrotracker.data.service.NominatimApiService
+import com.example.cigarrotracker.data.service.OverpassApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +13,8 @@ import dagger.hilt.android.components.ViewModelComponent
 class HiltModule {
 
     @Provides
-    fun provideNewsRepository(
-        newsApiService: NewsApiService
-    ): NoticiaRepository = NoticiaRepository(newsApiService)
+    fun providePlacesRepository(
+        overpassApiService: OverpassApiService,
+        nominatimApiService: NominatimApiService
+    ): PlacesRepository = PlacesRepository(overpassApiService, nominatimApiService)
 }

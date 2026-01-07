@@ -26,7 +26,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cigarrotracker.ui.theme.CigarrotrackerTheme
-import com.example.cigarrotracker.components.NoticiasComposable
 import android.app.Application
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -85,9 +84,8 @@ fun AppNavigation(navController: NavHostController, viewModel: CigarroViewModel)
         composable(Destino.Ecra01.route) { Ecra01(viewModel) }
         composable(Destino.Ecra02.route) { Ecra02(viewModel) }
         composable(Destino.Ecra03.route) { Ecra03(viewModel) }
-        composable(Destino.EcraNoticias.route) {
-            com.example.cigarrotracker.components.NoticiasComposable()
-        }
+        
+        composable(Destino.EcraLugares.route) { EcraLugares() }
 
     }
 }
