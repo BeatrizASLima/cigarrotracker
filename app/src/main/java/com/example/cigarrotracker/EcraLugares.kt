@@ -137,7 +137,9 @@ fun EcraLugares() {
         }
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(uiState.places) { place ->
