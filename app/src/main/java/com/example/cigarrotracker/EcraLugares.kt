@@ -81,19 +81,6 @@ fun EcraLugares() {
             label = { Text("Longitude") },
             modifier = Modifier.fillMaxWidth()
         )
-        OutlinedTextField(
-            value = radiusText,
-            onValueChange = { radiusText = it },
-            label = { Text("Raio (metros)") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = cityText,
-            onValueChange = { cityText = it },
-            label = { Text("Cidade") },
-            modifier = Modifier.fillMaxWidth()
-        )
 
         Button(
             onClick = {
@@ -110,6 +97,20 @@ fun EcraLugares() {
         ) {
             Text("Buscar por coordenadas")
         }
+
+        OutlinedTextField(
+            value = radiusText,
+            onValueChange = { radiusText = it },
+            label = { Text("Raio (metros)") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = cityText,
+            onValueChange = { cityText = it },
+            label = { Text("Cidade") },
+            modifier = Modifier.fillMaxWidth()
+        )
 
         Button(
             onClick = {
